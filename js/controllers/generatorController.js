@@ -37,15 +37,16 @@ function drawText() {
     gCtx.fillStyle = line.color;
     gCtx.strokeStyle = line.stroke;
     gCtx.fillText(txt, line.pos.x, line.pos.y);
+
     gCtx.strokeText(txt, line.pos.x, line.pos.y);
   });
 }
 
 function onChangeFontSize(diff) {
   changeFontSize(diff);
-
   renderCanvas();
 }
+
 function drawBorder() {
   const line = getLine();
   gCtx.beginPath();
@@ -55,21 +56,23 @@ function drawBorder() {
     gCtx.measureText(line.txt).width + 70,
     line.size + 25
   );
-  // gCtx.moveTo(pos.x) - gCtx.measureText(line.txt).width;
-
-  gCtx.lineWidth = 1;
+  gCtx.lineWidth = 3;
   gCtx.strokeStyle = '#2FB974';
   gCtx.stroke();
   gCtx.closePath();
 }
 
+// Clear part of the canvas
+
 function onSetLineTxt(txt) {
   setLineTxt(txt);
+  drawBorder();
   renderCanvas();
 }
 
 //FONTS Controller
 function onChangeColor(value, color) {
+  console.log('value:', value);
   changeColor(value, color);
   renderCanvas();
 }
@@ -82,6 +85,7 @@ function onChangeFont(font) {
 //LINES
 function onSwitchLine() {
   const line = switchLine();
+
   onSetLineTxt(line.txt);
   renderCanvas();
 }
@@ -89,12 +93,14 @@ function onSwitchLine() {
 function onMoveLine(direction) {
   const diff = direction === 'down' ? 20 : -20;
   moveLine(diff, 'y');
+
   renderCanvas();
 }
 
 function onAddLine() {
   const font = document.querySelector('.select-font').value;
   addLine(font);
+
   renderCanvas();
 }
 
@@ -113,4 +119,4 @@ function downloadImg(elLink) {
   elLink.href = imgContent;
 }
 
-function onShareMeme() {}
+

@@ -102,7 +102,7 @@ body {
 }
 
 .edit-buttons {
-  height: 25px;
+  height: 30px;
 }
 
 .social-btn {
@@ -115,6 +115,7 @@ body {
   background-color: #383b42;
   padding: 60px;
   border-radius: 50px;
+  width: 500px;
 }
 
 .img {
@@ -146,13 +147,15 @@ canvas {
 
 .font-container {
   background-color: #19a59f;
+  flex-wrap: wrap;
+  gap: 30px;
+  display: flex;
   margin-top: 20px;
   padding: 20px;
   border-radius: 50px;
 }
 
 .btns-box {
-  display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top: 20px;
@@ -184,4 +187,19 @@ canvas {
   margin-top: 5%;
   font-size: 40px;
   text-align: center;
+}
+
+/* HELPERS */
+
+.flex {
+  display: flex;
+}
+
+/* MEDIUM */
+@media (max-width: 945px) {
+  .main-content {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
 }
