@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>MemeGen</title>
+  </head>
+  <body onload="onInit()">
+    <header class="main-header">
+      <div class="header-container">
+        <nav class="main-nav">
+          <div class="logo"></div>
+          <ul class="list">
+            <li><a href="#" onclick="onLoadGallery()">Gallery</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </nav>
+        <main class="gallery-container">
+          <section class="gallery"></section>
+        </main>
+      </div>
+    </header>
+
+    <main class="main-content none">
+      <div class="canvas-container">
+        <canvas class="canvas" height="500" width="500"></canvas>
+      </div>
+      <div class="generator-btns">
+        <input
+          class="text-input"
+          type="text"
+          id="text-input"
+          oninput="onSetLineTxt(value)"
+        />
+        <!-- FIRST SECTION OF BUTTONS -->
+        <section class="first-btn-container">
+          <button onclick="onSwitchLine()">
+            <img
+              class="edit-buttons"
+              src="./ICONS/up-and-down-opposite-double-arrows-side-by-side.png"
+            />
+          </button>
+          <button onclick="onRemoveLine()">
+            <img class="edit-buttons" src="./ICONS/trash.png" />
+          </button>
+          <button onclick="onAddLine()">
+            <img class="edit-buttons" src="./ICONS/add.png" />
+          </button>
+        </section>
+        <!-- MOVE BUTTON SECTION -->
+        <button onclick="onMoveLine('up')">
+          <img class="edit-buttons" src="./ICONS/up.png" />
+        </button>
+        <button onclick="onMoveLine('down')">
+          <img class="edit-buttons" src="./ICONS/down.png" />
+        </button>
+        <!-- FONT HANDLE CONTAINER -->
+        <section class="font-container">
+          <button onclick="onChangeFontSize(5)">
+            <img class="edit-buttons" src="./ICONS/increase font - icon.png" />
+          </button>
+          <button onclick="onChangeFontSize(-5)">
+            <img class="edit-buttons" src="./ICONS/decrease font - icon.png" />
+          </button>
+          <button onclick="onChangeAlign('left')">
+            <img class="edit-buttons" src="./ICONS/align-to-left.png" />
+          </button>
+          <button onclick="onChangeAlign('center')">
+            <img class="edit-buttons" src="./ICONS/center-text-alignment.png" />
+          </button>
+          <button onclick="onChangeAlign('right')">
+            <img class="edit-buttons" src="./ICONS/align-to-right.png" />
+          </button>
+          <br />
+          <select class="select-font" onchange="onChangeFont(value)">
+            <option value="impact">Impact</option>
+            <option value="inconsolata">Inconsolata</option>
+            <option value="ubuntu">Ubuntu</option>
+            <option value="playfair">Playfair</option>
+          </select>
+          <div class="color-box">
+            <button>
+              <img class="edit-buttons" src="./ICONS/text stroke.png" />
+            </button>
+            <input
+              type="color"
+              name="outline-color"
+              value="#000"
+              onchange="onChangeColor('outline', value)"
+            />
+            <button class="btn-font-color">
+              <img
+                class="edit-buttons"
+                src="./ICONS/paint-board-and-brush.png"
+              />
+            </button>
+            <input
+              type="color"
+              name="font-color"
+              value="#000"
+              onInput="onChangeColor('font', value)"
+            />
+          </div>
+        </section>
+        <section class="btns-box">
+          <a href="#" onclick="downloadImg(this)" download="meme.jpg"
+            ><button>Download</button></a
+          >
+          <a href="#" onclick="onShareImg(this)"><button>Share</button></a>
+        </section>
+      </div>
+    </main>
+    <div class="user-msg"></div>
+
+    <script src="js/services/uploadService.js"></script>
+    <script src="js/services/memeService.js"></script>
+    <script src="js/controllers/generatorController.js"></script>
+    <script src="js/controllers/galleryController.js"></script>
+  </body>
+</html>
