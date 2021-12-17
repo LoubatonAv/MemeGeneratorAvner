@@ -1,13 +1,12 @@
 function uploadImg() {
-  const imgDataUrl = gCanvas.toDataURL('image/jpeg');
+  const imgDataUrl = gCanvas.toDataURL();
 
   // A function to be called if request succeeds
   function onSuccess(uploadedImgUrl) {
     const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl);
     document.querySelector(
       '.user-msg'
-    ).innerText = `Your photo is available here:
-     ${uploadedImgUrl}`;
+    ).innerText = `Your photo is available here: ${uploadedImgUrl}`;
 
     document.querySelector('.share-container').innerText = `
         <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
@@ -27,6 +26,7 @@ function doUploadImg(imgDataUrl, onSuccess) {
   })
     .then((res) => res.text())
     .then((url) => {
+      console.log('Got back live url:', url);
       onSuccess(url);
     })
     .catch((err) => {

@@ -8,35 +8,44 @@
     <link rel="icon" type="image/x-icon" href="./ICONS/favicon_io/favicon.ico">
     <title>Meme-Generator</title>
   </head>
-  <body onload="onInit()">
-    <header class="main-header">
-      <div class="header-container">
-        <nav class="main-nav">
-          <div class="logo"></div>
-          <ul class="list">
+  <!-- HEADER -->
+  <body  onload="onInit()">
+    <div class="main-screen" onclick="toggleMenu()" ></div>
+    <header class="main-header main-layout">
+        <nav class="main-nav main-layout flex">
+          <div class="logo">
+            <img src="./css/logo/LOGO.png" alt="Logo" class="logo">
+          </div>
+          <ul class="list main-layout flex  flex-end">
             <li><a href="#" onclick="onLoadGallery()">Gallery</a></li>
             <li><a href="#">About</a></li>
           </ul>
+          <button class="btn-menu" onclick="toggleMenu()">☰</button>
         </nav>
-        <main class="gallery-container">
-          <section class="gallery"></section>
-        </main>
-      </div>
-    </header>
+        
 
-    <main class="main-content none">
-      <div class="canvas-container">
-        <canvas class="canvas" height="500" width="500"></canvas>
+        
       </div>
-      <div class="generator-btns">
+      
+    </header>
+<!-- GALLERY -->
+    <main class="gallery-container">
+      <section class="gallery flex main-layout"></section>
+    </main>
+<!-- GENERATOR -->
+    <main class="main-content center flex none ">
+      <div class="canvas-container">
+        <canvas class="canvas" height="500" width="515"></canvas></div>
+      </div>
+      <div class="generator-btns flex">
         <input
           class="text-input"
           type="text"
           id="text-input"
           oninput="onSetLineTxt(value)"
         />
-        <!-- FIRST SECTION OF BUTTONS -->
-        <section class="first-btn-container">
+<!-- FIRST SECTION OF BUTTONS -->
+        <section class="first-btn-container flex center">
           <button onclick="onSwitchLine()">
             <img
               class="edit-buttons"
@@ -58,7 +67,8 @@
           <img class="edit-buttons" src="./ICONS/down.png" />
         </button>
         <!-- FONT HANDLE CONTAINER -->
-        <section class="font-container">
+        <div></div>
+        <section class="font-container flex">
           <label onclick="onChangeFontSize(5)">
             <img class="edit-buttons" src="./ICONS/increase font - icon.png" />
           </label>
@@ -74,7 +84,6 @@
           <label onclick="onChangeAlign('right')">
             <img class="edit-buttons" src="./ICONS/align-to-right.png" />
           </label>
-          <br />
           <select class="select-font" onchange="onChangeFont(value)">
             <option value="impact">Impact</option>
             <option value="inconsolata">Inconsolata</option>
@@ -97,7 +106,6 @@
               style="visibility: hidden"
             />
           </label>
-        
           <label class="edit-buttons" 
           ><img
             class="edit-buttons"
@@ -118,10 +126,19 @@
             ><button>Download</button></a
           >
           <a href="#" onclick="onShareImg(this)"><button>Share</button></a>
+          <!-- <a href="#" onclick="doUploadImg(this)"><button>Upload</button></a> SERVER NOT RESPONDING -->
         </section>
       </div>
+
     </main>
-    <div class="user-msg"></div>
+
+    <script>
+      function toggleMenu() {
+          document.body.classList.toggle('menu-open');
+      }
+    </script>
+    
+    
 
     <script src="js/services/uploadService.js"></script>
     <script src="js/services/memeService.js"></script>
