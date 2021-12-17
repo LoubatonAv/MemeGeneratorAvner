@@ -79,9 +79,9 @@ function getEventPosition(ev) {
   return pos;
 }
 
-function lineClicked(isDrag) {
+function lineClicked(isPicked) {
   const line = getLine();
-  line.isDrag = isDrag;
+  line.isPicked = isPicked;
 }
 
 //get the existing input of the lines array
