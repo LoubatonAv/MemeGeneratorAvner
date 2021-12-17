@@ -3,6 +3,8 @@
 var gCanvas;
 var gCtx;
 var gDiff;
+var gStartPos;
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
 
 //Render the canvas
 function renderCanvas() {
@@ -12,8 +14,8 @@ function renderCanvas() {
   img.src = `imgs/${currImage.url}`;
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-    drawText();
-    drawBorder();
+    typeText();
+    highLightText();
     renderTextInput();
   };
 }
@@ -25,9 +27,66 @@ function renderTextInput() {
   document.getElementById('text-input').value = line.txt;
 }
 
+function addMouseListeners() {
+  gCanvas.addEventListener('mousedown', onMouseClick);
+}
+
+function addTouchListeners() {
+  gCanvas.addEventListener('touchstart', onMouseClick);
+}
+
+function onMouseClick(ev) {
+  gCanvas.style.cursor = 'pointer';
+  const pos = getEventPosition(ev);
+  gStartPos = pos;
+  if (!clickedLine(pos)) return;
+  lineClicked(true);
+  renderTextInput();
+  renderCanvas();
+}
+
+function clickedLine(clickedPos) {
+  const lines = getLines();
+  const clickedLineIdx = lines.findIndex((line) => {
+    const lineWidth = gCtx.measureText(line.txt).width;
+    const lineHeight = line.size;
+    return (
+      clickedPos.x >= line.pos.x - lineWidth / 2 - 10 &&
+      clickedPos.x <= line.pos.x + lineWidth + 20 &&
+      clickedPos.y >= line.pos.y - 10 &&
+      clickedPos.y <= line.pos.y + lineHeight + 20
+    );
+  });
+  if (clickedLineIdx !== -1) {
+    updateLineId(clickedLineIdx);
+    return lines[clickedLineIdx];
+  }
+}
+
+function getEventPosition(ev) {
+  var pos = {
+    x: ev.offsetX,
+    y: ev.offsetY,
+  };
+  if (gTouchEvs.includes(ev.type)) {
+    ev.preventDefault();
+    ev = ev.changedTouches[0];
+    pos = {
+      x: ev.pageX - ev.target.offsetLeft,
+      y: ev.pageY - ev.target.offsetTop,
+    };
+  }
+  return pos;
+}
+
+function lineClicked(isDrag) {
+  const line = getLine();
+  line.isDrag = isDrag;
+}
+
 //get the existing input of the lines array
 //and set them on the canvas
-function drawText() {
+function typeText() {
   const lines = getLines();
   lines.forEach((line) => {
     const txt = line.txt;
@@ -47,26 +106,24 @@ function onChangeFontSize(diff) {
   renderCanvas();
 }
 
-function drawBorder() {
+function highLightText() {
   const line = getLine();
   gCtx.beginPath();
   gCtx.rect(
-    line.pos.x - gCtx.measureText(line.txt).width + 50,
+    line.pos.x - gCtx.measureText(line.txt).width - 90,
     line.pos.y - 45,
-    gCtx.measureText(line.txt).width + 70,
-    line.size + 25
+    gCtx.measureText(line.txt).width + 1000,
+    line.size + 50
   );
   gCtx.lineWidth = 3;
-  gCtx.strokeStyle = '#2FB974';
+  gCtx.strokeStyle = '#ffff00';
   gCtx.stroke();
   gCtx.closePath();
 }
 
-// Clear part of the canvas
-
 function onSetLineTxt(txt) {
   setLineTxt(txt);
-  drawBorder();
+  highLightText();
   renderCanvas();
 }
 
@@ -118,5 +175,3 @@ function downloadImg(elLink) {
   var imgContent = gCanvas.toDataURL('image/jpeg');
   elLink.href = imgContent;
 }
-
-

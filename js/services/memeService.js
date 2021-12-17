@@ -36,7 +36,7 @@ var gMeme = {
       color: 'white',
       stroke: 'black',
       font: 'impact',
-      pos: { x: 250, y: 50 },
+      pos: { x: 250, y: 70 },
     },
 
     {

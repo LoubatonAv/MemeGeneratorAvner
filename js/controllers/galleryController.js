@@ -8,8 +8,18 @@ function onInit() {
   window.addEventListener('resize', () => {
     resizeCanvas();
   });
+  addListeners();
   renderCanvas();
   renderMemes();
+}
+
+function addListeners() {
+  addMouseListeners();
+  addTouchListeners();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    renderCanvas();
+  });
 }
 
 //Handle resize canvas
@@ -34,13 +44,13 @@ function renderMemes() {
 //Loads gallery and hides the generator
 function onLoadGallery() {
   document.querySelector('.gallery-container').classList.remove('none');
-  document.querySelector('.main-content').classList.add('none');
+  document.querySelector('.main-content').style.display = 'none';
 }
 
 //Image selection to the editor
 function onImgSelect(id) {
   setImg(id);
   document.querySelector('.gallery-container').classList.add('none');
-  document.querySelector('.main-content').classList.remove('none');
+  document.querySelector('.main-content').style.display = 'flex';
   renderCanvas();
 }

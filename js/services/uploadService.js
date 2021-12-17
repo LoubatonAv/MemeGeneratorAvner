@@ -38,7 +38,6 @@ function onShareImg() {
   const memeDateUrl = gCanvas.toDataURL();
 
   function onSuccess(uploadedImgUrl) {
-    const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl);
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}`
     );
