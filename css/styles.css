@@ -24,7 +24,7 @@
 
 html {
   color: #000000;
-  font-family: impact, serif;
+  font-family: impact;
 }
 
 body {
@@ -124,6 +124,7 @@ canvas {
 /* FONT HANDLE BUTTONS IMAGES  */
 .edit-buttons {
   height: 30px;
+  cursor: pointer;
 }
 
 /* GALLERY IMAGES  */

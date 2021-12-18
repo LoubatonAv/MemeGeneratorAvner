@@ -121,11 +121,28 @@ function createLine(font) {
   };
 }
 
+function clickedLine(clickedPosition) {
+  const lines = getLines();
+  const clickedLineId = lines.findIndex((line) => {
+    const lineWidth = gCtx.measureText(line.txt).width;
+    const lineHeight = line.size;
+    return (
+      clickedPosition.x >= line.pos.x - lineWidth / 2 - 10 &&
+      clickedPosition.x <= line.pos.x + lineWidth + 20 &&
+      clickedPosition.y >= line.pos.y - 10 &&
+      clickedPosition.y <= line.pos.y + lineHeight + 20
+    );
+  });
+  if (clickedLineId !== -1) {
+    updateLineId(clickedLineId);
+    return lines[clickedLineId];
+  }
+}
+
 //align text handlers
 function changeAlign(alignDirection) {
   const line = getLine();
   line.align = alignDirection;
-
   switch (alignDirection) {
     case 'left':
       line.pos.x = 0;
@@ -138,7 +155,6 @@ function changeAlign(alignDirection) {
       break;
   }
 }
-
 function removeLine() {
   const lines = getLines();
   if (!lines.length) return;
@@ -152,12 +168,12 @@ function changeColor(value, color) {
   else gMeme.lines[gCurrLineIdx].stroke = color;
 }
 
-function changeFontSize(diff) {
-  const line = getLine();
-  line.size += diff;
-}
-
 function changeFont(font) {
   const line = getLine();
   line.font = font;
+}
+
+function changeFontSize(diff) {
+  const line = getLine();
+  line.size += diff;
 }

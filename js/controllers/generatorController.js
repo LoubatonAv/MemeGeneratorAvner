@@ -27,40 +27,53 @@ function renderTextInput() {
   document.getElementById('text-input').value = line.txt;
 }
 
+function addEventListeners() {
+  addMouseListeners();
+  addTouchListeners();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    renderCanvas();
+  });
+}
+
 function addMouseListeners() {
-  gCanvas.addEventListener('mousedown', onMouseClick);
+  gCanvas.addEventListener('mousemove', mouseMove);
+  gCanvas.addEventListener('mousedown', mouseDown);
+  gCanvas.addEventListener('mouseup', mouseUp);
 }
 
 function addTouchListeners() {
-  gCanvas.addEventListener('touchstart', onMouseClick);
+  gCanvas.addEventListener('touchmove', mouseMove);
+  gCanvas.addEventListener('touchstart', mouseDown);
+  gCanvas.addEventListener('touchend', mouseUp);
 }
 
-function onMouseClick(ev) {
-  gCanvas.style.cursor = 'pointer';
+function mouseDown(ev) {
   const pos = getEventPosition(ev);
-  gStartPos = pos;
   if (!clickedLine(pos)) return;
+  gStartPos = pos;
   lineClicked(true);
   renderTextInput();
   renderCanvas();
+  gCanvas.style.cursor = 'pointer';
 }
 
-function clickedLine(clickedPos) {
-  const lines = getLines();
-  const clickedLineIdx = lines.findIndex((line) => {
-    const lineWidth = gCtx.measureText(line.txt).width;
-    const lineHeight = line.size;
-    return (
-      clickedPos.x >= line.pos.x - lineWidth / 2 - 10 &&
-      clickedPos.x <= line.pos.x + lineWidth + 20 &&
-      clickedPos.y >= line.pos.y - 10 &&
-      clickedPos.y <= line.pos.y + lineHeight + 20
-    );
-  });
-  if (clickedLineIdx !== -1) {
-    updateLineId(clickedLineIdx);
-    return lines[clickedLineIdx];
-  }
+function mouseUp() {
+  lineClicked(false);
+  gCanvas.style.cursor = 'pointer';
+}
+
+function mouseMove(ev) {
+  const line = getLine();
+  if (!line || !line.isPicked) return;
+  const pos = getEventPosition(ev);
+  const dx = pos.x - gStartPos.x;
+  const dy = pos.y - gStartPos.y;
+  moveLine(dx, 'x');
+  moveLine(dy, 'y');
+  gCanvas.style.cursor = 'pointer';
+  gStartPos = pos;
+  renderCanvas();
 }
 
 function getEventPosition(ev) {
@@ -79,11 +92,6 @@ function getEventPosition(ev) {
   return pos;
 }
 
-function lineClicked(isPicked) {
-  const line = getLine();
-  line.isPicked = isPicked;
-}
-
 //get the existing input of the lines array
 //and set them on the canvas
 function typeText() {
@@ -96,21 +104,15 @@ function typeText() {
     gCtx.fillStyle = line.color;
     gCtx.strokeStyle = line.stroke;
     gCtx.fillText(txt, line.pos.x, line.pos.y);
-
     gCtx.strokeText(txt, line.pos.x, line.pos.y);
   });
-}
-
-function onChangeFontSize(diff) {
-  changeFontSize(diff);
-  renderCanvas();
 }
 
 function highLightText() {
   const line = getLine();
   gCtx.beginPath();
   gCtx.rect(
-    line.pos.x - gCtx.measureText(line.txt).width - 90,
+    line.pos.x - gCtx.measureText(line.txt).width - 500,
     line.pos.y - 45,
     gCtx.measureText(line.txt).width + 1000,
     line.size + 50
@@ -123,14 +125,17 @@ function highLightText() {
 
 function onSetLineTxt(txt) {
   setLineTxt(txt);
-  highLightText();
   renderCanvas();
 }
 
 //FONTS Controller
 function onChangeColor(value, color) {
-  console.log('value:', value);
   changeColor(value, color);
+  renderCanvas();
+}
+
+function onChangeFontSize(diff) {
+  changeFontSize(diff);
   renderCanvas();
 }
 
@@ -150,14 +155,12 @@ function onSwitchLine() {
 function onMoveLine(direction) {
   const diff = direction === 'down' ? 20 : -20;
   moveLine(diff, 'y');
-
   renderCanvas();
 }
 
 function onAddLine() {
   const font = document.querySelector('.select-font').value;
   addLine(font);
-
   renderCanvas();
 }
 

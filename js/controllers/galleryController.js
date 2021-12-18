@@ -5,21 +5,9 @@ function onInit() {
   gCanvas = document.querySelector('.canvas');
   gCtx = gCanvas.getContext('2d');
   window.addEventListener('resize', resizeCanvas);
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-  });
-  addListeners();
+  addEventListeners();
   renderCanvas();
   renderMemes();
-}
-
-function addListeners() {
-  addMouseListeners();
-  addTouchListeners();
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-    renderCanvas();
-  });
 }
 
 //Handle resize canvas
@@ -27,6 +15,10 @@ function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container');
   gCanvas.innerWidth = elContainer.offsetWidth;
   gCanvas.innerHeight = elContainer.offsetHeight;
+}
+function lineClicked(isPicked) {
+  const line = getLine();
+  line.isPicked = isPicked;
 }
 
 //Renders the meme to the gallery
