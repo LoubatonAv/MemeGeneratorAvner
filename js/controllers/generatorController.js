@@ -105,6 +105,7 @@ function typeText() {
     gCtx.font = `${line.size}px ${line.font}`;
     gCtx.fillStyle = line.color;
     gCtx.strokeStyle = line.stroke;
+    gCtx.textBaseline = 'middle';
     gCtx.fillText(txt, line.pos.x, line.pos.y);
     gCtx.strokeText(txt, line.pos.x, line.pos.y);
   });
@@ -113,17 +114,17 @@ function typeText() {
 // highlighting the selected line
 function highLightText() {
   const line = getLine();
+  // console.log('line:', line);
   gCtx.beginPath();
   gCtx.rect(
     line.pos.x - gCtx.measureText(line.txt).width - 500,
-    line.pos.y - 45,
+    line.pos.y - 65,
     gCtx.measureText(line.txt).width + 1000,
     line.size + 50
   );
-  gCtx.lineWidth = 3;
+  gCtx.lineWidth = 2;
   gCtx.strokeStyle = '#ffff00';
   gCtx.stroke();
-  gCtx.closePath();
 }
 
 function onSetLineTxt(txt) {
