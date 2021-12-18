@@ -1,3 +1,5 @@
+/* fonts */
+
 @font-face {
   font-family: impact;
   src: url(../fonts/Impact/impact.ttf);
@@ -81,8 +83,6 @@ body {
   margin-inline-start: 2rem;
 }
 
-/* CANVAS CONTENT*/
-
 /* GENERATOR AND CANVAS*/
 .main-content {
   flex-direction: row;
@@ -118,7 +118,7 @@ canvas {
   padding: 60px;
   border-radius: 50px;
   max-width: 450px;
-  max-height: 450px;
+  max-width: 450px;
 }
 
 /* FONT HANDLE BUTTONS IMAGES  */
@@ -214,7 +214,7 @@ canvas {
 }
 
 /* MEDIUM */
-@media (max-width: 945px) {
+@media (max-width: 950px) {
   .main-content {
     display: flex;
     gap: 20px;
@@ -225,7 +225,7 @@ canvas {
   }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 950px) {
   /* hamburger */
   .main-nav ul {
     position: fixed;

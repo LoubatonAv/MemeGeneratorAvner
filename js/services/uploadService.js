@@ -34,6 +34,11 @@ function doUploadImg(imgDataUrl, onSuccess) {
     });
 }
 
+function downloadImg(elLink) {
+  var imgContent = gCanvas.toDataURL('image/jpeg');
+  elLink.href = imgContent;
+}
+
 function onShareImg() {
   const memeDateUrl = gCanvas.toDataURL();
 

@@ -4,7 +4,7 @@ var gCanvas;
 var gCtx;
 var gDiff;
 var gStartPos;
-const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
+const gTouchEvents = ['touchstart', 'touchmove', 'touchend'];
 
 //Render the canvas
 function renderCanvas() {
@@ -27,6 +27,7 @@ function renderTextInput() {
   document.getElementById('text-input').value = line.txt;
 }
 
+// Event listeners
 function addEventListeners() {
   addMouseListeners();
   addTouchListeners();
@@ -48,6 +49,7 @@ function addTouchListeners() {
   gCanvas.addEventListener('touchend', mouseUp);
 }
 
+// Move text
 function mouseDown(ev) {
   const pos = getEventPosition(ev);
   if (!clickedLine(pos)) return;
@@ -81,7 +83,7 @@ function getEventPosition(ev) {
     x: ev.offsetX,
     y: ev.offsetY,
   };
-  if (gTouchEvs.includes(ev.type)) {
+  if (gTouchEvents.includes(ev.type)) {
     ev.preventDefault();
     ev = ev.changedTouches[0];
     pos = {
@@ -108,6 +110,7 @@ function typeText() {
   });
 }
 
+// highlighting the selected line
 function highLightText() {
   const line = getLine();
   gCtx.beginPath();
@@ -172,9 +175,4 @@ function onRemoveLine() {
 function onChangeAlign(direction) {
   changeAlign(direction);
   renderCanvas();
-}
-
-function downloadImg(elLink) {
-  var imgContent = gCanvas.toDataURL('image/jpeg');
-  elLink.href = imgContent;
 }
