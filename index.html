@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="./ICONS/favicon_io/favicon.ico">
+    <title>Meme-Generator</title>
+  </head>
+  <!-- HEADER -->
+  <body  onload="onInit()">
+    <div class="main-screen" onclick="toggleMenu()" ></div>
+    <header class="main-header main-layout">
+        <nav class="main-nav main-layout flex">
+          <div class="logo">
+            <img src="css/logo/LOGO.png" alt="Logo" class="logo">
+  
+          </div>
+          <ul class="list main-layout flex  flex-end">
+            <li><a href="#" onclick="onLoadGallery()">Gallery</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+          <button class="btn-menu" onclick="toggleMenu()">☰</button>
+        </nav>
+      </div>
+      
+    </header>
+<!-- GALLERY -->
+    <main class="gallery-container">
+      <section class="gallery flex main-layout"></section>
+    </main>
+<!-- GENERATOR -->
+    <main class="main-content center flex none ">
+      <div class="canvas-container">
+        <canvas class="canvas" height="500" width="450"></canvas></div>
+      </div>
+      <div class="generator-btns flex">
+        <input
+          class="text-input"
+          type="text"
+          id="text-input"
+          oninput="onSetLineTxt(value)"
+        />
+<!-- FIRST SECTION OF BUTTONS -->
+        <section class="first-btn-container flex center">
+          <button onclick="onSwitchLine()">
+            <img
+              class="edit-buttons"
+              src="./ICONS/up-and-down-opposite-double-arrows-side-by-side.png"
+            />
+          </button>
+          <button onclick="onRemoveLine()">
+            <img class="edit-buttons" src="./ICONS/trash.png" />
+          </button>
+          <button onclick="onAddLine()">
+            <img class="edit-buttons" src="./ICONS/add.png" />
+          </button>
+        </section>
+        <!-- MOVE BUTTON SECTION -->
+        <button onclick="onMoveLine('up')">
+          <img class="edit-buttons" src="./ICONS/up.png" />
+        </button>
+        <button onclick="onMoveLine('down')">
+          <img class="edit-buttons" src="./ICONS/down.png" />
+        </button>
+        <!-- FONT HANDLE CONTAINER -->
+        <div></div>
+        <section class="font-container flex">
+          <label onclick="onChangeFontSize(5)">
+            <img class="edit-buttons" src="./ICONS/increase font - icon.png" />
+          </label>
+          <label onclick="onChangeFontSize(-5)">
+            <img class="edit-buttons" src="./ICONS/decrease font - icon.png" />
+          </label>
+          <label onclick="onChangeAlign('left')">
+            <img class="edit-buttons" src="./ICONS/align-to-left.png" />
+          </label>
+          <label onclick="onChangeAlign('center')">
+            <img class="edit-buttons" src="./ICONS/center-text-alignment.png" />
+          </label>
+          <label onclick="onChangeAlign('right')">
+            <img class="edit-buttons" src="./ICONS/align-to-right.png" />
+          </label>
+          <select class="select-font" onchange="onChangeFont(value)">
+            <option value="impact">Impact</option>
+            <option value="inconsolata">Inconsolata</option>
+            <option value="ubuntu">Ubuntu</option>
+            <option value="playfair">Playfair</option>
+          </select>
+          <div class="color-box">
+          <label class="edit-buttons"
+            ><img
+              class="edit-buttons"
+              src="./ICONS/paint-board-and-brush.png"
+              alt=""
+            />
+            <input
+              type="color"
+              onchange="onChangeColor('font', value)"
+              class="color-input"
+              name="font-color"
+              value="#fffFFF"
+              style="visibility: hidden"
+            />
+          </label>
+          <label class="edit-buttons" 
+          ><img
+            class="edit-buttons"
+            src="./ICONS/text stroke.png"/>
+          <input
+            type="color"
+            id="color"
+            onchange="onChangeColor('outline', value)"
+            class="color-input"
+            name="outline-color"
+            value="#ffffff"
+            style="visibility: hidden"
+          />
+        </label>
+       
+        </section>
+        <section class="btns-box flex">
+          <a href="#" ><button onclick="showModal()">Downloaasdd</button></a>
+          <a href="#" onclick="onShareImg(this)"><button>Share</button></a>
+          <!-- <a href="#" onclick="doUploadImg(this)"><button>Upload</button></a> SERVER NOT RESPONDING -->
+        </section>
+      </div>
+
+      <!-- modal -->
+      <section class="modal">
+        <h1>Are you sure you want to save?</h1>
+        <div>
+        <a href="#" onclick="downloadImg(this)"><button>Yes</button></a>
+        <a href="#" onclick="closeModal()"><button>No</button></a>
+        </div>
+      </section>
+    </main>
+
+      <!-- hamburger script -->
+    <script>
+      function toggleMenu() {
+          document.body.classList.toggle('menu-open');
+      }
+    </script>
+
+<!-- function downloadImg(elLink) {
+  updateLineId(-1);
+  renderCanvas();
+  const data = gCanvas.toDataURL();
+  elLink.href = data;
+  elLink.download = 'meme.jpg';
+}
+     -->
+
+    <script src="js/services/uploadService.js"></script>
+    <script src="js/services/memeService.js"></script>
+    <script src="js/controllers/generatorController.js"></script>
+    <script src="js/controllers/galleryController.js"></script>
+  </body>
+</html>
