@@ -31,10 +31,8 @@ function renderTextInput() {
 function addEventListeners() {
   addMouseListeners();
   addTouchListeners();
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-    renderCanvas();
-  });
+
+  renderCanvas();
 }
 
 function addMouseListeners() {
@@ -65,6 +63,24 @@ function mouseUp() {
   gCanvas.style.cursor = 'pointer';
 }
 
+function showModal() {
+  updateLineId(-1);
+  renderCanvas();
+
+  document.querySelector('.modal').style.display = 'flex';
+}
+
+closeModal();
+function closeModal() {
+  window.addEventListener(
+    'click',
+    function (e) {
+      document.querySelector('.modal').style.display = 'none';
+    },
+    true
+  );
+}
+
 function mouseMove(ev) {
   const line = getLine();
   if (!line || !line.isPicked) return;
@@ -83,6 +99,7 @@ function getEventPosition(ev) {
     x: ev.offsetX,
     y: ev.offsetY,
   };
+
   if (gTouchEvents.includes(ev.type)) {
     ev.preventDefault();
     ev = ev.changedTouches[0];
@@ -114,17 +131,20 @@ function typeText() {
 // highlighting the selected line
 function highLightText() {
   const line = getLine();
-  // console.log('line:', line);
-  gCtx.beginPath();
-  gCtx.rect(
-    line.pos.x - gCtx.measureText(line.txt).width - 500,
-    line.pos.y - 65,
-    gCtx.measureText(line.txt).width + 1000,
-    line.size + 50
-  );
-  gCtx.lineWidth = 2;
-  gCtx.strokeStyle = '#ffff00';
-  gCtx.stroke();
+  if (line !== -1) {
+    gCtx.beginPath();
+    gCtx.rect(
+      line.pos.x - gCtx.measureText(line.txt).width - 500,
+      line.pos.y - 65,
+      gCtx.measureText(line.txt).width + 1000,
+      line.size + 50
+    );
+    gCtx.lineWidth = 2;
+    gCtx.strokeStyle = '#ffff00';
+    gCtx.stroke();
+  } else {
+    return;
+  }
 }
 
 function onSetLineTxt(txt) {
@@ -151,7 +171,6 @@ function onChangeFont(font) {
 //LINES
 function onSwitchLine() {
   const line = switchLine();
-
   onSetLineTxt(line.txt);
   renderCanvas();
 }

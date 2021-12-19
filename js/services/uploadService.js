@@ -35,8 +35,10 @@ function doUploadImg(imgDataUrl, onSuccess) {
 }
 
 function downloadImg(elLink) {
-  var imgContent = gCanvas.toDataURL('image/jpeg');
-  elLink.href = imgContent;
+  renderCanvas();
+  const data = gCanvas.toDataURL();
+  elLink.href = data;
+  elLink.download = 'meme.jpg';
 }
 
 function onShareImg() {

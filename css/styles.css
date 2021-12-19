@@ -1,11 +1,6 @@
 /* fonts */
 
 @font-face {
-  font-family: impact;
-  src: url(../fonts/Impact/impact.ttf);
-}
-
-@font-face {
   font-family: ubuntu;
   src: url(../fonts/ubuntu/Ubuntu-Regular.ttf);
 }
@@ -26,7 +21,7 @@
 
 html {
   color: #000000;
-  font-family: impact;
+  font-family: impact, inconsolata, playfair, ubuntu;
 }
 
 body {
@@ -55,6 +50,45 @@ body {
   background-image: linear-gradient(to right, #0f9bb3ed, #30bb72);
 }
 
+.modal {
+  background-image: linear-gradient(to bottom, #12dafded, #44ff9b);
+  display: none;
+  position: absolute;
+  height: 300px;
+  color: white;
+  text-decoration: outl;
+  width: 300px;
+  background-color: white;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.modal h1 {
+  text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 5px 0 #000,
+    1px 1px 0 #000;
+}
+
+.modal button {
+  background-color: #19a59f;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.modal button:hover {
+  background-color: white;
+  color: #19a59f;
+}
 /* Header's buttons */
 .list {
   display: inline-block;

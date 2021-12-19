@@ -4,18 +4,12 @@
 function onInit() {
   gCanvas = document.querySelector('.canvas');
   gCtx = gCanvas.getContext('2d');
-  window.addEventListener('resize', resizeCanvas);
+  // window.addEventListener('resize', resizeCanvas);
   addEventListeners();
   renderCanvas();
   renderMemes();
 }
 
-//Handle resize canvas
-function resizeCanvas() {
-  const elContainer = document.querySelector('.canvas-container');
-  gCanvas.innerWidth = elContainer.offsetWidth;
-  gCanvas.innerHeight = elContainer.offsetHeight;
-}
 function lineClicked(isPicked) {
   const line = getLine();
   line.isPicked = isPicked;

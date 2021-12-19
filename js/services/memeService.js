@@ -28,6 +28,7 @@ var gImgs = [
 var gMeme = {
   selectedImgId: 0,
   selectedLineIdx: 0,
+
   lines: [
     {
       txt: 'Fun fun fun',
@@ -93,13 +94,13 @@ function addLine(font) {
 }
 
 //updating the id of the line
-function updateLineId(idx) {
-  gCurrLineIdx = idx;
+function updateLineId(id) {
+  gCurrLineIdx = id;
   gMeme.selectedLineIdx = gCurrLineIdx;
 }
 
 function switchLine() {
-  const lines = getLines();
+  const lines = gMeme.lines;
   if (!lines.length) return;
   if (gMeme.selectedLineIdx + 1 === lines.length) gMeme.selectedLineIdx = 0;
   else gMeme.selectedLineIdx++;
@@ -122,7 +123,8 @@ function createLine(font) {
 }
 
 function clickedLine(clickedPosition) {
-  const lines = getLines();
+  const lines = gMeme.lines;
+
   const clickedLineId = lines.findIndex((line) => {
     const lineWidth = gCtx.measureText(line.txt).width;
     const lineHeight = line.size;
